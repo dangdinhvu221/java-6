@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{homePage/layouts/indexHomePage}"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body >
+<article layout:fragment="content" id="page">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p class="bread"><span><a href="index.html">Home</a></span> / <span>Shopping Cart</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="colorlib-product">
+        <div class="container">
+            <div class="row row-pb-lg">
+                <div class="col-md-10 offset-md-1">
+                    <div class="process-wrap">
+                        <div class="process text-center active">
+                            <p><span>01</span></p>
+                            <h3>Shopping Cart</h3>
+                        </div>
+                        <div class="process text-center">
+                            <p><span>02</span></p>
+                            <h3>Checkout</h3>
+                        </div>
+                        <div class="process text-center">
+                            <p><span>03</span></p>
+                            <h3>Order Complete</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-pb-lg">
+                <div class="col-md-12">
+                    <div class="product-name d-flex">
+                        <div class="one-forth text-left px-4">
+                            <span>Product Details</span>
+                        </div>
+                        <div class="one-eight text-center">
+                            <span>Price</span>
+                        </div>
+                        <div class="one-forth  text-center">
+                            <span>Quantity</span>
+                        </div>
+                        <div class="one-eight text-center">
+                            <span>Total</span>
+                        </div>
+                        <div class="one-eight text-center px-4">
+                            <span>Remove</span>
+                        </div>
+                    </div>
+                    <div class="product-cart d-flex" ng-repeat="item in cart.items">
+                        <div class="one-forth">
+                            <div class="display-tc">
+                                <h3>{{item.name}}</h3>
+                            </div>
+                        </div>
+                        <div class="one-eight text-center">
+                            <div class="display-tc">
+                                <span class="price">{{item.price}} $</span>
+                            </div>
+                        </div>
+                        <div class="one-forth text-center">
+                            <div class="display-tc pl-5 pr-4">
+                                <div class="input-group pl-5 pr-5">
+                                    <input ng-change="cart.saveLocalStorage()"  ng-model="item.qty" type="number" id="quantity" name="quantity" class="form-control input-number"
+                                                value="1"
+                                                min="1" max="100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="one-eight text-center">
+                            <div class="display-tc">
+                                <span class="price">{{item.qty * item.price}}</span>
+                            </div>
+                        </div>
+                        <div class="one-eight text-center cursor">
+                            <div class="display-tc">
+                                <a ng-click = "cart.remove(item.id)" class="closed"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-pb-lg">
+                <div class="col-md-12">
+                    <div class="total-wrap">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <form th:action="@{/order/checkout}">
+                                    <div class="row form-group">
+                                        <div class="col-sm-3">
+                                            <input type="submit" value="Checkout" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <div class="total">
+                                    <div class="sub">
+                                        <p><span>Subtotal:</span> <span>{{cart.amount}} $</span></p>
+                                        <p><span>VAT:</span> <span>{{cart.amount * 0.1}} $</span></p>
+                                        <p><span>Delivery:</span> <span>Free ship</span></p>
+                                    </div>
+                                    <div class="grand-total">
+                                        <p><span><strong>Total:</strong></span>
+                                            <span>${{(cart.amount * 1.1) | number : 2}} $</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+</body>
+</html>
+
