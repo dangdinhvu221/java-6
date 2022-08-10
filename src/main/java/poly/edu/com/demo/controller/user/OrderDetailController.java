@@ -14,16 +14,5 @@ import poly.edu.com.demo.service.OrderService;
 @Controller
 @RequestMapping("/earPhone/dashAdmin")
 public class OrderDetailController {
-    @Autowired
-    private OrderService orderService;
-    @Autowired
-    private OrderDetailService detailsService;
 
-    @GetMapping("/orderDetails/{id}")
-    public String showOrderDetails(ModelMap model,
-                                   @PathVariable Long id){
-        Orders order = this.orderService.getOrders(id);
-        model.addAttribute("listOrderDetails", this.detailsService.findByOrdersByOrdersId(order));
-        return "dashAdmin/fragments/orderDetails";
-    }
 }

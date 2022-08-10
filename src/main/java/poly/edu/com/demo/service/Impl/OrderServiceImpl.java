@@ -1,13 +1,18 @@
 package poly.edu.com.demo.service.Impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import poly.edu.com.demo.entity.OrderDetails;
 import poly.edu.com.demo.entity.OrderStates;
 import poly.edu.com.demo.entity.Orders;
 import poly.edu.com.demo.entity.Users;
+import poly.edu.com.demo.repositories.IOrderDetailRepository;
 import poly.edu.com.demo.repositories.IOrderRepository;
 import poly.edu.com.demo.repositories.IOrderStatesRepository;
 import poly.edu.com.demo.repositories.IUserRepository;
@@ -18,6 +23,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -27,73 +33,80 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private IOrderRepository orderRepository;
     @Autowired
+    private IOrderDetailRepository detailRepository;
+    @Autowired
     private IOrderStatesRepository orderStatesRepository;
 
-
     @Override
-    public Orders addOrder(Users user, Date created, BigDecimal totalPrice, Long orderStatesId) {
-        Orders orders = new Orders();
-        OrderStates orderStates = this.orderStatesRepository.findById(orderStatesId).get();
-        orders.setId(null);
-        orders.setUsersByUserId(user);
-        orders.setCreated(new Date());
-        orders.setTotalPrice(totalPrice);
-        orders.setOderStatesByOderStatesId(orderStates);
-        return this.orderRepository.save(orders);
+    public Orders addOrder(Users users, Date created, BigDecimal totalPrice, Long orderStates) {
+        return null;
     }
 
     @Override
     public Orders getOrderDesc() {
-        return this.orderRepository.findTop1ByOrderByIdDesc();
+        return null;
     }
 
     @Override
     public Orders addOrders(Orders orders) {
-        return this.orderRepository.save(orders);
+        return null;
     }
 
     @Override
     public Orders updateOrders(Long id, Long idState) {
-        if(id != null){
-            Orders o = this.orderRepository.findById(id).get();
-            o.setId(id);
-            OrderStates orderStates = this.orderStatesRepository.findById(idState).get();
-            o.setOderStatesByOderStatesId(orderStates);
-            this.orderRepository.save(o);
-        }
         return null;
     }
 
     @Override
     public List<Orders> getAllOrders() {
-        return this.orderRepository.findAll();
+        return null;
     }
 
     @Override
     public Orders getOrders(Long id) {
-        return this.orderRepository.findById(id).get();
+        return orderRepository.findById(id).get();
     }
 
     @Override
     public Orders deleteOrders(Long id) {
-        if (id != null) {
-            Optional<Orders> o = this.orderRepository.findById(id);
-            if (o.isPresent()) {
-                this.userRepository.deleteById(id);
-                return o.get();
-            }
-        }
         return null;
     }
 
     @Override
     public void deleteAllOrders(Long[] id) {
-        this.orderRepository.deleteAllByIdInBatch(Arrays.asList(id));
+
     }
 
     @Override
     public Page<Orders> findPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        return this.orderRepository.findAll(pageable);
+        return null;
+    }
+
+    @Override
+    public Orders create(JsonNode orderData) {
+        ObjectMapper mapper = new ObjectMapper();
+        Orders order = mapper.convertValue(orderData, Orders.class);
+        orderRepository.save(order);
+        TypeReference<List<OrderDetails>> type = new TypeReference<List<OrderDetails>>() {
+        };
+        List<OrderDetails> details = mapper.convertValue(orderData.get("orderDetails"), type)
+                .stream().peek(d -> d.setOrdersByOrdersId(order)).collect(Collectors.toList());
+        detailRepository.saveAll(details);
+        return order;
+    }
+
+    @Override
+    public int quantityProduct(Integer id) {
+        return this.detailRepository.quantityProduct(id);
+    }
+
+    @Override
+    public void sellProduct(Integer quantity, Integer id) {
+        this.detailRepository.sellProduct(quantity, id);
+    }
+
+    @Override
+    public List<Orders> findByUsername(String username) {
+        return orderRepository.findByUsername(username);
     }
 }

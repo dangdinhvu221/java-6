@@ -47,22 +47,23 @@
                                 <i class="icon-user"></i>
                                 <a>Welcome: [[${#request.remoteUser}]]</a>
                             </a>
-                            <ul class="dropdown" >
-                                <th:block th:unless="${#request.remoteUser}">
-                                    <li><a th:href="@{/security/login/form}">LogIn</a></li>
+                            <th:block th:unless="${#request.remoteUser}">
+                                <ul class="dropdown">
+                                    <li><a th:href="@{/earPhone/logInForm}">LogIn</a></li>
                                     <li><a th:href="@{/earPhone/signUp}">SignUp</a></li>
-                                </th:block>
-                            </ul>
-                            <ul class="dropdown" >
-                                <th:block th:if="${#request.remoteUser}">
+                                </ul>
+                            </th:block>
+                            <th:block th:if="${#request.remoteUser}">
+
+                                <ul class="dropdown">
                                     <li><a th:href="@{/earPhone/history}">History Orders</a></li>
                                     <li><a th:href="@{/earPhone/profile}">Profile</a></li>
                                     <li th:if="${#request.isUserInRole('ADMIN') or #request.isUserInRole('0')}">
                                         <a>Dashboard Admin</a>
                                     </li>
                                     <li><a th:href="@{/security/logoff}">Log out</a></li>
-                                </th:block>
-                            </ul>
+                                </ul>
+                            </th:block>
                         </li>
                         <li class="cart"><a th:href="@{/earPhone/cart}">
                             <i class="icon-shopping-cart"></i>

@@ -16,24 +16,25 @@ public class SecurityController {
     public String success(Model model){
         model.addAttribute("message", "Đăng nhập thành công!");
         model.addAttribute("login", true);
-        return "forward:/security/login/form";
+        return "redirect:/earPhone/homePage";
     }
 
     @RequestMapping("/security/login/error")
     public String error(Model model){
         model.addAttribute("message", "Sai thông tin đăng nhập!");
-        return "forward:/security/login/form";
+        return "logIn/index";
     }
 
     @RequestMapping("/security/logoff/success")
     public String logoff(Model model){
+        model.addAttribute("success", true);
         model.addAttribute("message", "Đăng xuất thành công!");
-        return "forward:/security/login/form";
+        return "logIn/index";
     }
 
     @RequestMapping("/security/unauthoried")
     public String unauthoried(Model model){
         model.addAttribute("message", "Không có quyền truy xuất!");
-        return "forward:/security/login/form";
+        return "logIn/index";
     }
 }

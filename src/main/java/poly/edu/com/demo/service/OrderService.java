@@ -1,6 +1,7 @@
 package poly.edu.com.demo.service;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.domain.Page;
 import poly.edu.com.demo.entity.Orders;
 import poly.edu.com.demo.entity.Users;
@@ -27,4 +28,12 @@ public interface OrderService {
     void deleteAllOrders(Long[] id);
 
     Page<Orders> findPaginated(int pageNo, int pageSize);
+
+    Orders create(JsonNode orderData);
+
+    int quantityProduct(Integer id);
+
+    void sellProduct(Integer quantity, Integer id);
+
+    Object findByUsername(String username);
 }

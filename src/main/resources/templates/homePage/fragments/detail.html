@@ -1,24 +1,20 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{homePage/layouts/indexHomePage}">
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        .box {
-            display: none;
-        }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
-
 <body>
     <article layout:fragment="content" id="page">
         <div class="breadcrumbs">
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <p class="bread"><span><a href="index.html">Home</a></span> / <span>Checkout</span></p>
+                        <p class="bread"><span><a href="index.html">Home</a></span> / <span>details</span></p>
                     </div>
                 </div>
             </div>
@@ -26,42 +22,42 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <form method="post" class="colorlib-form">
+                    <form method="post" class="colorlib-form" th:object = "${order}">
                         <h2>Billing Details</h2>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="fname">UserName</label>
-                                <input type="text" id="fname" th:value="${#request.remoteUser}"
+                                <input type="text" id="fname" th:field="${account.username}"
                                     class="form-control disabled" placeholder="Your firstname">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="fname">Address</label>
-                                <input ng-model = "order.address1" type="text" id="address" class="form-control" placeholder="Enter Your Address">
+                                <input th:field = "*{address1}" type="text" id="address" class="form-control disabled" placeholder="Enter Your Address">
                             </div>
                             <div class="form-group">
-                                <input ng-model = "order.address2"  type="text" id="address2" class="form-control" placeholder="Second Address">
+                                <input th:field  = "*{address2}"  type="text" id="address2" class="form-control disabled" placeholder="Second Address">
                             </div>
                         </div>
 
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="email">E-mail Address</label>
-                                <input type="text" id="email" class="form-control" placeholder="State Province">
+                                <input th:field = "*{email}" type="text" id="email" class="form-control disabled" placeholder="State Province">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="Phone">Phone Number</label>
-                                <input type="text" id="zippostalcode" class="form-control" placeholder="">
+                                <input th:field = "*{phone}" type="text" id="zippostalcode" class="form-control disabled" placeholder="">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="ORDER">ORDER DATE</label>
-                                <input type="text" id="ORDER" value="{{order.createDate | date:'dd-MM-yyyy'}}"
-                                    class="form-control" placeholder="">
+                                <input type="text" id="ORDER" th:field = "*{createDate | date:'dd-MM-yyyy'}"
+                                    class="form-control disabled" placeholder="">
                             </div>
                         </div>
                     </form>
@@ -140,5 +136,4 @@
         </div>
     </article>
 </body>
-
 </html>
