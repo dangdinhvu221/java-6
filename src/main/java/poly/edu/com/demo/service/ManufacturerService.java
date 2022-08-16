@@ -7,19 +7,14 @@ import poly.edu.com.demo.entity.Manufacturer;
 
 import java.util.List;
 public interface ManufacturerService {
-    Manufacturer addManufacturer(Manufacturer manufacturer, MultipartFile image);
+    Manufacturer addManufacturer(Manufacturer manufacturer);
 
-    Manufacturer updateManufacturer(Manufacturer manufacturer, MultipartFile file);
+    Manufacturer updateManufacturer(Manufacturer manufacturer);
 
     List<Manufacturer> getAllManufacturer();
-
-    List<Manufacturer> getManufacturerByName(String name);
 
     Manufacturer getManufacturer(Long id);
 
     Manufacturer deleteManufacturer(Long id);
 
-    void deleteAllManufacturer(Long[] id);
-
-    Page<Manufacturer> findPaginated(int pageNo, int pageSize);
 }

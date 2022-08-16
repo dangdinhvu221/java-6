@@ -1,5 +1,6 @@
 package poly.edu.com.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,17 +10,17 @@ import poly.edu.com.demo.entity.typeEnum.TypeRole;
 import poly.edu.com.demo.entity.typeEnum.TypeStatus;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table
-public class Users {
+public class Users  implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String username;
     private String password;
     private String fullName;
@@ -36,5 +37,8 @@ public class Users {
     private TypeGender typeGender;
     @Enumerated(EnumType.ORDINAL)
     private TypeStatus typeStatus;
+    @JsonIgnore
+    @OneToMany(mappedBy = "usersByUserId")
+    List<Orders> orders;
 
 }

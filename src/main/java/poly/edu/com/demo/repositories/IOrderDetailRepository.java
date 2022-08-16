@@ -15,10 +15,10 @@ public interface IOrderDetailRepository extends JpaRepository<OrderDetails, Long
 
     @Query(value = "select count (*) from ear_phone where id = ?", nativeQuery = true)
 
-    int quantityProduct(Integer id);
+    Integer quantityProduct(Long id);
 
     @Transactional
     @Modifying
     @Query(value = "update EarPhone p set p.quantity = p.quantity - ?1 where p.id = ?2")
-    void sellProduct(Integer quantity, Integer id);
+    void sellProduct(Integer quantity, Long id);
 }

@@ -21,17 +21,11 @@ public interface EarPhoneService {
 
     EarPhone getEarPhone(Long id);
 
-    List<EarPhone> getTypeEarPhone(Integer typeEarPhone);
-
-    List<EarPhone> findByNameEarPhone(String name);
-
     EarPhone deleteEarPhone(Long id);
 
     void deleteAllEarPhone(Long[] id);
 
-    Page<EarPhone> findPaginated(int pageNo, int pageSize);
+    List<EarPhone> findAllProductAdmin();
 
-    void saveEarPhoneToDb(String name, String title, String warranty, Integer frequency, String color, BigDecimal price, String impedance, MultipartFile image, String description, Date created, Integer quantity, TypeEarPhone typeEarPhone, TypeCondition typeCondition, Manufacturer manufacturerByManufacturerId);
-
-    void updateEarPhoneToDb(Long id, String name, String title, String warranty, Integer frequency, String color, BigDecimal price, String impedance, MultipartFile image, String description, Date created, Integer quantity, TypeEarPhone typeEarPhone, TypeCondition typeCondition, Manufacturer manufacturerByManufacturerId);
+    List<EarPhone> findByCategoryId(String cid);
 }

@@ -1,29 +1,35 @@
 package poly.edu.com.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table
-public class Orders {
+public class Orders  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date created;
-    private BigDecimal totalPrice;
+    private String address1;
+    private String address2;
+    private Double total;
 
     @ManyToOne
-    @JoinColumn(name = "users_id", referencedColumnName = "id")
+    @JoinColumn(name = "username", referencedColumnName = "username")
     private Users usersByUserId;
-    @ManyToOne
-    @JoinColumn(name = "orderStates_id", referencedColumnName = "id")
-    private OrderStates oderStatesByOderStatesId;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "ordersByOrdersId")
+    List<OrderDetails> orderDetails;
 }

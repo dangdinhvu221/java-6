@@ -51,22 +51,17 @@ public class EarPhoneServiceImpl implements EarPhoneService {
 
     @Override
     public List<EarPhone> getAllEarPhones() {
-        return this.earPhoneRepository.findAll();
+        return this.earPhoneRepository.findAllProduct();
+    }
+
+    @Override
+    public List<EarPhone> findAllProductAdmin() {
+        return earPhoneRepository.findAll();
     }
 
     @Override
     public EarPhone getEarPhone(Long id) {
         return this.earPhoneRepository.findById(id).get();
-    }
-
-    @Override
-    public List<EarPhone> getTypeEarPhone(Integer typeEarPhone) {
-        return null;
-    }
-
-    @Override
-    public List<EarPhone> findByNameEarPhone(String name) {
-        return this.earPhoneRepository.findByNameLike("%" + name + "%");
     }
 
     @Override
@@ -87,73 +82,7 @@ public class EarPhoneServiceImpl implements EarPhoneService {
     }
 
     @Override
-    public Page<EarPhone> findPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        return this.earPhoneRepository.findAll(pageable);
+    public List<EarPhone> findByCategoryId(String cid) {
+        return earPhoneRepository.findByCategoryId(cid);
     }
-
-    @Override
-    public void saveEarPhoneToDb(String name, String title, String warranty, Integer frequency, String color, BigDecimal price, String impedance,
-                                 MultipartFile file, String description, Date created, Integer quantity, TypeEarPhone typeEarPhone, TypeCondition typeCondition, Manufacturer manufacturerByManufacturerId) {
-        EarPhone earPhone = new EarPhone();
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        if (fileName.contains("..")) {
-            System.out.println("not a a valid file");
-        }
-        try {
-            earPhone.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Manufacturer manufacturer = manufacturerRepository.findById(manufacturerByManufacturerId.getId()).get();
-        earPhone.setName(name);
-        earPhone.setTitle(title);
-        earPhone.setColor(color);
-        earPhone.setPrice(price);
-        earPhone.setQuantity(quantity);
-        earPhone.setWarranty(warranty);
-        earPhone.setFrequency(frequency);
-        earPhone.setImpedance(impedance);
-        earPhone.setDescription(description);
-        earPhone.setDescription(description);
-        earPhone.setTypeEarPhone(typeEarPhone);
-        earPhone.setTypeCondition(typeCondition);
-        earPhone.setManufacturerByManufacturerId(manufacturer);
-        earPhone.setCreated(new Date());
-        earPhoneRepository.save(earPhone);
-    }
-
-    @Override
-    public void updateEarPhoneToDb(Long id, String name, String title, String warranty, Integer frequency, String color, BigDecimal price, String impedance, MultipartFile file, String description, Date created, Integer quantity, TypeEarPhone typeEarPhone, TypeCondition typeCondition, Manufacturer manufacturerByManufacturerId) {
-        EarPhone earPhone = new EarPhone();
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        if (fileName.isEmpty()) {
-            earPhone.setImage(this.earPhoneRepository.findById(id).get().getImage());
-        }else{
-            try {
-                earPhone.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        Manufacturer manufacturer = manufacturerRepository.findById(manufacturerByManufacturerId.getId()).get();
-        earPhone.setId(id);
-        earPhone.setName(name);
-        earPhone.setTitle(title);
-        earPhone.setColor(color);
-        earPhone.setPrice(price);
-        earPhone.setQuantity(quantity);
-        earPhone.setWarranty(warranty);
-        earPhone.setFrequency(frequency);
-        earPhone.setImpedance(impedance);
-        earPhone.setDescription(description);
-        earPhone.setDescription(description);
-        earPhone.setTypeEarPhone(typeEarPhone);
-        earPhone.setTypeCondition(typeCondition);
-        earPhone.setManufacturerByManufacturerId(manufacturer);
-        earPhone.setCreated(created);
-        earPhoneRepository.save(earPhone);
-    }
-
-
 }

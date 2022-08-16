@@ -1,0 +1,92 @@
+<div class="card-body container bg-white">
+    <h2 class="card-title bg-info text-white text-center p-3">Create EarPhone</h2>
+
+    <form class="row" method="post" enctype="multipart/form-data">
+        <div class="form-group col-6">
+            <label for="exampleInputName1">Name:</label>
+            <input ng-model="form.name" name="name" type="text" class="form-control" id="exampleInputName1"
+                placeholder="Name">
+        </div>
+        <div class="form-group col-6">
+            <label for="exampleInputEmail3">Title:</label>
+            <input ng-model="form.title" name="title" type="text" class="form-control" id="exampleInputEmail3"
+                placeholder="Title">
+        </div>
+        <div class="form-group col-6">
+            <label for="exampleInputPassword7">Warranty:</label>
+            <input ng-model="form.warranty" name="warranty" type="text" class="form-control" id="exampleInputPassword7"
+                placeholder="Warranty">
+        </div>
+        <div class="form-group col-6">
+            <label for="exampleInputPassword5">Frequency:</label>
+            <input ng-model="form.frequency" name="frequency" type="text" class="form-control"
+                id="exampleInputPassword5" placeholder="Frequency">
+        </div>
+        <div class="form-group col-6">
+            <label for="exampleInputPassword8">Color:</label>
+            <input ng-model="form.color" name="color" type="text" class="form-control" id="exampleInputPassword8"
+                placeholder="Color">
+        </div>
+
+        <div class="form-group col-6">
+            <label for="exampleInputPassword4">Impedance:</label>
+            <input ng-model="form.impedance" name="impedance" type="text" class="form-control"
+                id="exampleInputPassword4" placeholder="Impedance">
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleSelectGender">Manufacturers:</label>
+            <select ng-model="form.manufacturer.id" name="manufacturers" class="form-control" id="exampleSelectGender">
+                <option>-- Mời bạn chọn -- </option>
+                <option value="1" ng-repeat="c in manufacturer" ng-value="c.id">{{c.nameManufacturer}}</option>
+            </select>
+        </div>
+        <div class="form-group col-6">
+            <label for="exampleSelectGender">TypeEarPhone:</label>
+            <select ng-model="form.typeEarPhone" name="typeEarPhone" class="form-control" id="exampleSelectGender">
+                <option value="BLUETOOTH">BLUETOOTH</option>
+                <option value="WIRED_HEADPHONE">WIRED_HEADPHONE</option>
+            </select>
+        </div>
+        <div class="form-group col-6">
+            <label for="exampleSelectRole">TypeCondition:</label>
+            <select ng-model="form.typeCondition" name="typeCondition" class="form-control" id="exampleSelectRole">
+                <option value="NEW">NEW</option>
+                <option value="USED">USED</option>
+            </select>
+        </div>
+        <div class="form-group col-6">
+            <label for="exampleInputPassword9">Quantity:</label>
+            <input ng-model="form.quantity" name="quantity" type="text" class="form-control" id="exampleInputPassword9"
+                placeholder="Quantity">
+        </div>
+        <div class="form-group col-6">
+            <label for="exampleInputPassword9">Price:</label>
+            <input ng-model="form.price" name="price" type="text" class="form-control" id="exampleInputPassword9"
+                placeholder="Price">
+        </div>
+        <div class="form-group col-12">
+            <label>File upload:</label>
+            <div class="input-group">
+                <div class="custom-file">
+                    <input ng-model="form.image" name="image" type="file" class="custom-file-input"
+                        id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+                        onchange="angular.element(this).scope().imageChanged(this.files)">
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleTextarea1">Description</label>
+            <textarea ng-model="form.description" name="description" class="form-control" id="exampleTextarea1" rows="6"
+                spellcheck="false"></textarea>
+        </div>
+        
+        <div class="card-footer text-center">
+            <button class="btn btn-primary" ng-click="create()">Create</button>
+            <button class="btn btn-success" ng-click="update()">Update</button>
+            <button class="btn btn-danger" ng-click="delete(form)">Delete</button>
+            <button class="btn btn-info" ng-click="reset()">Reset</button>
+        </div>
+    </form>
+    
+</div>

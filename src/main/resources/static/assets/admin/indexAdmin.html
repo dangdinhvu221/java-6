@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- base:css -->
+    <link rel="stylesheet" href="/dashboard/vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="/dashboard/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/dashboard/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/dashboard/images/favicon.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+</head>
+<body ng-app = "admin-app">
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div ng-include="'/assets/admin/layouts/setting.html'"></div>
+
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <div ng-include="'/assets/admin/layouts/sidebar.html'"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <!-- partial:partials/navigation.html -->
+            <div ng-include="'/assets/admin/layouts/navigation.html'"></div>
+            <!-- partial -->
+            <div ng-view></div>
+
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <div ng-include="'/assets/admin/layouts/footer.html'"></div>
+            <!-- partial -->
+            <script src="/assets/admin/admin-app.js"></script>
+            <script src="/assets/admin/product/product-ctrl.js"></script>
+            <script src="/assets/admin/users/users-ctrl.js"></script>
+            <script src="/assets/admin/manufacturer/manufacturer-ctrl.js"></script>
+            <script src="/assets/admin/orders/orders-ctrl.js"></script>
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<div>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="/dashboard/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="/dashboard/js/off-canvas.js"></script>
+    <script src="/dashboard/js/hoverable-collapse.js"></script>
+    <script src="/dashboard/js/template.js"></script>
+    <script src="/dashboard/js/settings.js"></script>
+    <script src="/dashboard/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="/dashboard/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="/dashboard/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="/dashboard/js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $('#select-all').click(function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
+</div>
+</body>
+</html>

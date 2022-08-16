@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <article layout:fragment="content" id="page">
         <div class="breadcrumbs">
@@ -19,116 +20,69 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" th:object="${order}">
             <div class="row">
-                <div class="col-lg-8">
-                    <form method="post" class="colorlib-form" th:object = "${order}">
-                        <h2>Billing Details</h2>
+                <div class="col-lg-12">
+                    <form method="post" class="colorlib-form" >
+                        <div class="row">
+                            <h2 class="col-md-8">Billing Details</h2>
+                            <h2 class="col-md-4 ">Total: <span class="text-danger">[[*{total}]]</span></h2>
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="fname">UserName</label>
-                                <input type="text" id="fname" th:field="${account.username}"
+                                <input type="text" id="fname" th:field="*{usersByUserId.username}"
                                     class="form-control disabled" placeholder="Your firstname">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="fname">Address</label>
-                                <input th:field = "*{address1}" type="text" id="address" class="form-control disabled" placeholder="Enter Your Address">
+                                <input th:field="*{address1}" type="text" id="address" class="form-control disabled"
+                                    placeholder="Enter Your Address">
                             </div>
                             <div class="form-group">
-                                <input th:field  = "*{address2}"  type="text" id="address2" class="form-control disabled" placeholder="Second Address">
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="email">E-mail Address</label>
-                                <input th:field = "*{email}" type="text" id="email" class="form-control disabled" placeholder="State Province">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="Phone">Phone Number</label>
-                                <input th:field = "*{phone}" type="text" id="zippostalcode" class="form-control disabled" placeholder="">
+                                <input th:field="*{address2}" type="text" id="address2" class="form-control disabled"
+                                    placeholder="Second Address">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="ORDER">ORDER DATE</label>
-                                <input type="text" id="ORDER" th:field = "*{createDate | date:'dd-MM-yyyy'}"
-                                    class="form-control disabled" placeholder="">
+                                <input type="text" id="ORDER" th:field="*{created}" class="form-control disabled"
+                                    placeholder="">
                             </div>
                         </div>
                     </form>
-                </div>
-                <div class="col-lg-4">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="cart-detail">
-                                <h2>Cart Total</h2>
-                                <ul>
-                                    <li>
-                                        <span>Subtotal</span> <span>{{cart.amount}} $</span>
-                                        <ul ng-repeat="item in cart.items">
-                                            <li><span>{{item.qty}} x {{item.name}}</span> <span>{{item.qty *
-                                                    item.price}}
-                                                    $</span></li>
-                                        </ul>
-                                    </li>
-                                    <li><span>Shipping</span> <span>0.00 $</span></li>
-                                    <li><span>VAT:</span><span>{{cart.amount * 0.1}} $</span></li>
-                                    <li><span>Order Total:</span><span>{{(cart.amount * 1.1) | number : 2}} $</span>
-                                    </li>
-                                </ul>
+
+                    <div class="col-md-12">
+                        <div class="card mt-5">
+                            <div class="card-header">
+                                Order Line
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="cart-detail">
-                                <h2>Payment Method</h2>
-                                <label>Accepted Cards</label>
-                                <div class="icon-container">
-                                    <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                    <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                    <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                    <i class="fa fa-cc-discover" style="color:orange;"></i>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio" value="payment"> Payment on
-                                                delivery</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio" value="paypal"> Paypal</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" value=""> I have read and accept the terms
-                                                and
-                                                conditions</label>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="card-body">
+                                <table class="table table-header">
+                                    <thead>
+                                        <tr>
+                                            <td>id</td>
+                                            <td>Name</td>
+                                            <td>Price</td>
+                                            <td>Quantity</td>
+                                            <td>Amount</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="detail: *{orderDetails}" th:object="${detail}">
+                                            <td>[[*{earPhoneByEarPhoneId.id}]]</td>
+                                            <td>[[*{earPhoneByEarPhoneId.name}]]</td>
+                                            <td>$[[*{#numbers.formatDecimal(price, 0, 'COMMA', 2, 'POINT')}]]</td>
+                                            <td>[[*{quantity}]]</td>
+                                            <td>[[*{#numbers.formatDecimal(price*quantity, 0, 'COMMA', 2, 'POINT')}]]
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row ">
-                        <div class="col-md-12 text-center">
-                            <p><a ng-click = "order.purchase()" type="submit" class="btn btn-primary box payment">Continue
-                                    Orders</a></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <p><button class="btn btn-primary box paypal">Continue Payment</button></p>
                         </div>
                     </div>
                 </div>
@@ -136,4 +90,5 @@
         </div>
     </article>
 </body>
+
 </html>

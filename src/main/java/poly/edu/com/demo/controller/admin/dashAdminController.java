@@ -5,15 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/earPhone/dashAdmin/")
+
 public class dashAdminController {
 
-    @GetMapping("/home")
-    private String homeAdmin() {
-        return "dashAdmin/layouts/indexAdmin";
+    @RequestMapping({"/admin", "/admin/home/index", "/"})
+    public String admin(){
+        return "redirect:/assets/admin/indexAdmin.html";
+
     }
 
-    @GetMapping("/charts")
+    @RequestMapping("/earPhone/dashAdmin/charts")
     private String chart() {
         return "dashAdmin/fragments/chart";
     }

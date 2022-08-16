@@ -5,21 +5,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import poly.edu.com.demo.entity.Manufacturer;
 import poly.edu.com.demo.entity.OrderDetails;
-import poly.edu.com.demo.entity.OrderStates;
 import poly.edu.com.demo.entity.Orders;
 import poly.edu.com.demo.entity.Users;
 import poly.edu.com.demo.repositories.IOrderDetailRepository;
 import poly.edu.com.demo.repositories.IOrderRepository;
-import poly.edu.com.demo.repositories.IOrderStatesRepository;
 import poly.edu.com.demo.repositories.IUserRepository;
 import poly.edu.com.demo.service.OrderService;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,13 +25,9 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    private IUserRepository userRepository;
-    @Autowired
     private IOrderRepository orderRepository;
     @Autowired
     private IOrderDetailRepository detailRepository;
-    @Autowired
-    private IOrderStatesRepository orderStatesRepository;
 
     @Override
     public Orders addOrder(Users users, Date created, BigDecimal totalPrice, Long orderStates) {
@@ -49,17 +41,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Orders addOrders(Orders orders) {
-        return null;
+        return this.orderRepository.save(orders);
     }
 
     @Override
-    public Orders updateOrders(Long id, Long idState) {
+    public Orders updateOrders(Orders orders) {
+        Long id = orders.getId();
+        if (id != null) {
+            Optional<Orders> update = this.orderRepository.findById(id);
+            if (update.isPresent()) {
+                orders.setId(id);
+                return this.orderRepository.save(orders);
+            }
+        }
         return null;
     }
 
     @Override
     public List<Orders> getAllOrders() {
-        return null;
+        return this.orderRepository.findAll();
     }
 
     @Override
@@ -69,16 +69,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Orders deleteOrders(Long id) {
-        return null;
-    }
-
-    @Override
-    public void deleteAllOrders(Long[] id) {
-
-    }
-
-    @Override
-    public Page<Orders> findPaginated(int pageNo, int pageSize) {
+        if (id != null) {
+            Optional<Orders> order = this.orderRepository.findById(id);
+            if (order.isPresent()) {
+                this.orderRepository.deleteById(id);
+                return order.get();
+            }
+        }
         return null;
     }
 
@@ -86,22 +83,22 @@ public class OrderServiceImpl implements OrderService {
     public Orders create(JsonNode orderData) {
         ObjectMapper mapper = new ObjectMapper();
         Orders order = mapper.convertValue(orderData, Orders.class);
-        orderRepository.save(order);
+        this.orderRepository.save(order);
         TypeReference<List<OrderDetails>> type = new TypeReference<List<OrderDetails>>() {
         };
         List<OrderDetails> details = mapper.convertValue(orderData.get("orderDetails"), type)
                 .stream().peek(d -> d.setOrdersByOrdersId(order)).collect(Collectors.toList());
-        detailRepository.saveAll(details);
+        this.detailRepository.saveAll(details);
         return order;
     }
 
     @Override
-    public int quantityProduct(Integer id) {
+    public int quantityProduct(Long id) {
         return this.detailRepository.quantityProduct(id);
     }
 
     @Override
-    public void sellProduct(Integer quantity, Integer id) {
+    public void sellProduct(Integer quantity, Long id) {
         this.detailRepository.sellProduct(quantity, id);
     }
 

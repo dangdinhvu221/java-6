@@ -15,11 +15,7 @@ import java.util.Optional;
 public interface UserService {
     Optional<Users> findByID(String id);
 
-    boolean LogIn(String username, String password);
-
-    Users addUsers(String username, String password, String fullName, String email, String phone, MultipartFile file, Date created, TypeRole typeRole, TypeGender typeGender, TypeStatus typeStatus, String address, Date birthDay);
-
-    Users updateUsers(Long id, String username, String password, String fullName, String email, String phone, MultipartFile file, Date created, TypeRole typeRole, TypeGender typeGender, TypeStatus typeStatus, String address, Date birthDay);
+    Users addUsers(Users user);
 
     Users update(Users user);
 
@@ -34,6 +30,4 @@ public interface UserService {
     Users deleteUser(Long id);
 
     void deleteAllUsers(Long[] id);
-
-    Page<Users> findPaginated(int pageNo, int pageSize);
 }

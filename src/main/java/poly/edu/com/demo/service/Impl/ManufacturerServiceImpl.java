@@ -1,19 +1,11 @@
 package poly.edu.com.demo.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 import poly.edu.com.demo.entity.Manufacturer;
 import poly.edu.com.demo.repositories.IManufacturerRepository;
 import poly.edu.com.demo.service.ManufacturerService;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,33 +16,15 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     private IManufacturerRepository manufacturerRepository;
 
     @Override
-    public Manufacturer addManufacturer(Manufacturer manufacturer, MultipartFile file) {
+    public Manufacturer addManufacturer(Manufacturer manufacturer) {
         manufacturer.setId(null);
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        if (fileName.contains("..")) {
-            System.out.println("not a a valid file");
-        }
-        try {
-            manufacturer.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return this.manufacturerRepository.save(manufacturer);
     }
 
     @Override
-    public Manufacturer updateManufacturer(Manufacturer manufacturer, MultipartFile file) {
+    public Manufacturer updateManufacturer(Manufacturer manufacturer) {
         Long id = manufacturer.getId();
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         if (id != null) {
-            if (fileName.isEmpty()) {
-                manufacturer.setImage(this.manufacturerRepository.findById(id).get().getImage());
-            }
-            try {
-                manufacturer.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             Optional<Manufacturer> updatedManufacturer = this.manufacturerRepository.findById(id);
             if (updatedManufacturer.isPresent()) {
                 manufacturer.setId(id);
@@ -63,11 +37,6 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     @Override
     public List<Manufacturer> getAllManufacturer() {
         return this.manufacturerRepository.findAll();
-    }
-
-    @Override
-    public List<Manufacturer> getManufacturerByName(String name) {
-        return this.manufacturerRepository.findByNameManufacturerLike(name);
     }
 
     @Override
@@ -85,16 +54,5 @@ public class ManufacturerServiceImpl implements ManufacturerService {
             }
         }
         return null;
-    }
-
-    @Override
-    public void deleteAllManufacturer(Long[] id) {
-        this.manufacturerRepository.deleteAllByIdInBatch(Arrays.asList(id));
-    }
-
-    @Override
-    public Page<Manufacturer> findPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        return this.manufacturerRepository.findAll(pageable);
     }
 }

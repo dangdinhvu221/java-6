@@ -39,6 +39,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- angularJs -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Load up the router library - normally you might use npm/yarn and host it locally -->
+    <script src="https://unpkg.com/@angular/router@0.2.0/angular1/angular_1_router.js"></script>
 </head>
 
 <body  ng-app="shopping-cart-app" ng-controller="cart-controller">
@@ -97,7 +99,6 @@
                     </div>
                     <div class="row row-pb-md ">
                         <div class="col-lg-3 mb-4 text-center" th:each="item: ${listEarPhone}">
-
                             <div class="product-entry border">
                                 <a th:href="${EDIT + item.id}" class="prod-img">
                                     <img th:src="*{'data:image/jpeg;base64,'+ item.image}" class="img-fluid"

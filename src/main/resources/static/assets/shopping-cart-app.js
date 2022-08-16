@@ -56,49 +56,51 @@ app.controller("cart-controller", function ($scope, $http) {
   };
 
   $scope.cart.loadFromLocalStorage();
-
   $scope.order = {
-    createDate: new Date(),
+    created: new Date(),
     address1: "",
     address2: "",
-    account: { username: $("#username").text() },
+    usersByUserId: { username: $("#username").val() },
+    total: ($scope.cart.amount * 1.1).toFixed(2),
+
 
     get orderDetails() {
       return $scope.cart.items.map((i) => {
         return {
-          product: { id: i.id },
-          price: i.price,
+          earPhoneByEarPhoneId: { id: i.id },
           quantity: i.qty,
+          price: i.price,
         };
       });
     },
+
     purchase() {
       var order = angular.copy(this);
-      let id = $("#idOrder").text();
+      let id = $("#idOrder").val();
       let quantitySell = $("#quantitySell").val();
       $http
         .post(`/rest/orders/${id}/${quantitySell}`, order)
         .then((resp) => {
-          // console.log($("#idOrder").text())
-          // console.log($("#quantitySell").val())
+          console.log($("#idOrder").text())
+          console.log($("#quantitySell").val())
+          alert("Order succsesfully!!");
+
           $http
             .delete(`/rest/orders/${id}/${quantitySell}`)
             .then((resp) => {
-              alert("Dat Hang Thanh Cong");
+              // alert("Delete succsesfully!!");
             })
             .catch((err) => {
               console.log(err);
             });
           $scope.cart.clear();
-          location.href = "/earPhone/history";
-          // alert("Dat Hang Thanh Cong")
-          // $scope.cart.clear()
-          // location.href = "/order/detail/" + resp.data.id
+          location.href = "/order/detail/" + resp.data.id;
         })
         .catch((error) => {
-          alert("So luong k du");
+          alert("Order Error: " + error.message);
           console.log(error);
         });
+  console.log($scope.order);
     },
   };
 });

@@ -17,7 +17,7 @@ public interface OrderService {
 
     Orders addOrders(Orders orders);
 
-    Orders updateOrders(Long id, Long idState);
+    Orders updateOrders(Orders orders);
 
     List<Orders> getAllOrders();
 
@@ -25,15 +25,11 @@ public interface OrderService {
 
     Orders deleteOrders(Long id);
 
-    void deleteAllOrders(Long[] id);
-
-    Page<Orders> findPaginated(int pageNo, int pageSize);
-
     Orders create(JsonNode orderData);
 
-    int quantityProduct(Integer id);
+    int quantityProduct(Long id);
 
-    void sellProduct(Integer quantity, Integer id);
+    void sellProduct(Integer quantity, Long id);
 
-    Object findByUsername(String username);
+    List<Orders> findByUsername(String username);
 }

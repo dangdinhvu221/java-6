@@ -56,10 +56,10 @@
                             <th:block th:if="${#request.remoteUser}">
 
                                 <ul class="dropdown">
-                                    <li><a th:href="@{/earPhone/history}">History Orders</a></li>
+                                    <li><a th:href="@{/history}">History Orders</a></li>
                                     <li><a th:href="@{/earPhone/profile}">Profile</a></li>
                                     <li th:if="${#request.isUserInRole('ADMIN') or #request.isUserInRole('0')}">
-                                        <a>Dashboard Admin</a>
+                                        <a th:href="@{/admin}">Dashboard Admin</a>
                                     </li>
                                     <li><a th:href="@{/security/logoff}">Log out</a></li>
                                 </ul>

@@ -27,40 +27,29 @@
             <div class="row">
                 <div class="col-lg-8">
                     <form method="post" class="colorlib-form">
+<!--                        <input type="hidden" id="usersByUserId" th:value="${#request.getUserPrincipal()}">-->
                         <h2>Billing Details</h2>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="fname">UserName</label>
-                                <input type="text" id="fname" th:value="${#request.remoteUser}"
-                                    class="form-control disabled" placeholder="Your firstname">
+                                <input type="text" id="username" th:value="${#request.remoteUser}"
+                                    class="form-control"  placeholder="Your firstname">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="fname">Address</label>
+                                <label for="fname">Address1</label>
                                 <input ng-model = "order.address1" type="text" id="address" class="form-control" placeholder="Enter Your Address">
                             </div>
                             <div class="form-group">
+                                <label for="fname">Address2</label>
                                 <input ng-model = "order.address2"  type="text" id="address2" class="form-control" placeholder="Second Address">
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="email">E-mail Address</label>
-                                <input type="text" id="email" class="form-control" placeholder="State Province">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="Phone">Phone Number</label>
-                                <input type="text" id="zippostalcode" class="form-control" placeholder="">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="ORDER">ORDER DATE</label>
-                                <input type="text" id="ORDER" value="{{order.createDate | date:'dd-MM-yyyy'}}"
+                                <input type="text" id="ORDER" value="{{order.created | date:'dd-MM-yyyy'}}"
                                     class="form-control" placeholder="">
                             </div>
                         </div>
@@ -75,14 +64,17 @@
                                     <li>
                                         <span>Subtotal</span> <span>{{cart.amount}} $</span>
                                         <ul ng-repeat="item in cart.items">
+                                           
                                             <li><span>{{item.qty}} x {{item.name}}</span> <span>{{item.qty *
                                                     item.price}}
                                                     $</span></li>
+                                                    <input type="hidden" id="idOrder" value="{{item.id}}">
+                                                    <input type="hidden" id="quantitySell" value="{{item.qty}}">
                                         </ul>
                                     </li>
                                     <li><span>Shipping</span> <span>0.00 $</span></li>
                                     <li><span>VAT:</span><span>{{cart.amount * 0.1}} $</span></li>
-                                    <li><span>Order Total:</span><span>{{(cart.amount * 1.1) | number : 2}} $</span>
+                                    <li ><span>Order Total:</span><span id="totalPrice"> {{(cart.amount * 1.1) | number : 2}} <span>$</span></span>
                                     </li>
                                 </ul>
                             </div>
