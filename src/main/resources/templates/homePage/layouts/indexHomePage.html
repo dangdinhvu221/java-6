@@ -43,37 +43,22 @@
     <script src="https://unpkg.com/@angular/router@0.2.0/angular1/angular_1_router.js"></script>
 </head>
 
-<body  ng-app="shopping-cart-app" ng-controller="cart-controller">
+<body ng-app="shopping-cart-app" ng-controller="cart-controller">
 
     <div class="colorlib-loader"></div>
-    <script th:if="${login} == true">
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-        Toast.fire({
-            icon: 'error',
-            title: 'Đăng nhập thất bại'
-        })
-    </script>
     <div id="page">
         <!--    navigation start-->
         <div th:replace="homePage/fragments/navigation :: navigation"></div>
         <!--    navigation end-->
 
-        <!--content start-->
-        <!--    banner start-->
-        <div th:replace="homePage/fragments/banner :: banner"></div>
-        <!--    banner end-->
+
 
         <article layout:fragment="content">
+            <!--content start-->
+            <!--    banner start-->
+            <div th:replace="homePage/fragments/banner :: banner"></div>
+            <!--    banner end-->
+            
             <!--    text start-->
             <div class="colorlib-intro">
                 <div class="container">

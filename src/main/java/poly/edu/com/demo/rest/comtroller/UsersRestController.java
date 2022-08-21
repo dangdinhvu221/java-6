@@ -29,7 +29,7 @@ public class UsersRestController {
         return this.userService.getAllUsers();
     }
 
-    @PostMapping("")
+    @PostMapping()
     public Users create(@RequestBody Users user) {
         return this.userService.addUsers(user);
     }

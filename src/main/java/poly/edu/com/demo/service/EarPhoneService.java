@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface EarPhoneService {
-    EarPhone addEarPhone(EarPhone earPhone);
+    EarPhone addEarPhone(EarPhone earPhonez);
 
     EarPhone updateEarPhone(EarPhone earPhone);
 

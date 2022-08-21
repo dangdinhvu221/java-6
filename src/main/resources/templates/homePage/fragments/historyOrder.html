@@ -57,22 +57,27 @@
                                 </div>
                                 <div class="one-eight text-center">
                                     <div class="display-tc">
+                                        <span class="price">[[${order.usersByUserId.fullName}]]</span>
+                                    </div>
+                                </div>
+                                <div class="one-eight text-center">
+                                    <div class="display-tc">
+                                        <span class="price"
+                                            th:text="${#dates.format(order.created, 'dd-MMM-yyyy')}"></span>
+                                    </div>
+                                </div>
+                                <div class="one-forth text-center">
+                                    <div class="display-tc">
                                         <span class="price">[[${order.address1}]]</span>
                                     </div>
                                 </div>
+
                                 <div class="one-eight text-center">
                                     <div class="display-tc">
-                                        <span class="price" 
-                                        th:text="${#dates.format(order.created, 'dd-MMM-yyyy')}"
-                                        ></span>
-                                    </div>
-                                </div>
-                                <div class="one-eight text-center">
-                                    <div class="display-tc">
-                                        <a class=" btn btn-outline-warning">received
-                                        </a>
-                                        <a href="#" type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                        th:href="@{|/order/detail/${order.id}|}">show
+                                        <!-- <a class=" btn btn-outline-warning">received
+                                        </a> -->
+                                        <a type="button" class="btn btn-outline-primary"
+                                            th:href="@{|/order/detail/${order.id}|}" >show
                                         </a>
                                     </div>
                                 </div>

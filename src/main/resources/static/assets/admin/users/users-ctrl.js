@@ -12,7 +12,7 @@ app.controller("users-ctrl", function ($scope, $http) {
 
     $scope.reset = function () {
       $scope.form = {
-        createDate: new Date(),
+        created: new Date(),
         image: "",
         available: true,
       };
@@ -20,8 +20,7 @@ app.controller("users-ctrl", function ($scope, $http) {
 
   $scope.edit = function (item) {
     $scope.form = angular.copy(item);
-    console.log($scope.form);
-    $(".nav-tabs button:eq(1)").tab("show");
+    $(".nav-tabs button:(0)").tabs('show')
   };
 
     $scope.create = function () {
@@ -29,7 +28,7 @@ app.controller("users-ctrl", function ($scope, $http) {
       $http
         .post(`/rest/users`, item)
         .then((resp) => {
-          resp.data.createDate = new Date(resp.data.createDate);
+          resp.data.created = new Date(resp.data.created);
           $scope.items.push(resp.data);
           $scope.reset();
           alert("Them moi thanh cong");

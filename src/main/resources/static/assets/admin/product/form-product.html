@@ -36,22 +36,22 @@
         <div class="form-group col-12">
             <label for="exampleSelectGender">Manufacturers:</label>
             <select ng-model="form.manufacturer.id" name="manufacturers" class="form-control" id="exampleSelectGender">
-                <option>-- Mời bạn chọn -- </option>
+                <option selected class="disabled" value="">-- Mời bạn chọn -- </option>
                 <option value="1" ng-repeat="c in manufacturer" ng-value="c.id">{{c.nameManufacturer}}</option>
             </select>
         </div>
         <div class="form-group col-6">
             <label for="exampleSelectGender">TypeEarPhone:</label>
             <select ng-model="form.typeEarPhone" name="typeEarPhone" class="form-control" id="exampleSelectGender">
-                <option value="BLUETOOTH">BLUETOOTH</option>
-                <option value="WIRED_HEADPHONE">WIRED_HEADPHONE</option>
+                <option value="BLUETOOTH" ng-selected="{{form.typeEarPhone == 'BLUETOOTH'}}">BLUETOOTH</option>
+                <option value="WIRED_HEADPHONE" ng-selected="{{form.typeEarPhone == 'WIRED_HEADPHONE'}}">WIRED_HEADPHONE</option>
             </select>
         </div>
         <div class="form-group col-6">
             <label for="exampleSelectRole">TypeCondition:</label>
             <select ng-model="form.typeCondition" name="typeCondition" class="form-control" id="exampleSelectRole">
-                <option value="NEW">NEW</option>
-                <option value="USED">USED</option>
+                <option value="NEW" ng-selected="{{form.typeCondition == 'NEW'}}">NEW</option>
+                <option value="USED" ng-selected="{{form.typeCondition == 'USED'}}">USED</option>
             </select>
         </div>
         <div class="form-group col-6">

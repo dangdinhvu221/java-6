@@ -13,11 +13,12 @@ app.controller("product-ctrl", function ($scope, $http) {
         })
 
         $http.get("/rest/manufacturer").then(resp => {
-            $scope.cates = resp.data;
+            $scope.manufacturer = resp.data;
         })
     }
 
     $scope.initialize();
+    
 
     $scope.reset = function () {
         $scope.form = {
