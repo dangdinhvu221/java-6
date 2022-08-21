@@ -6,5 +6,5 @@ import java.io.File;
 
 public interface UploadService {
 
-    File save(MultipartFile file, String folder);
+    String save(MultipartFile file);
 }

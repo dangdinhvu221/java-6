@@ -27,38 +27,36 @@
                 placeholder="Username">
         </div>
         <div class="form-group col-6">
+            <label for="exampleInputPassword5">Password:</label>
+            <input name="password" ng-model="form.password" type="text" class="form-control" id="exampleInputPassword5"
+                placeholder="password">
+        </div>
+        <div class="form-group col-12">
             <label for="exampleInputCity1">Address</label>
             <input name="address" ng-model="form.address" type="text" class="form-control" id="exampleInputCity1"
                 placeholder="Location">
         </div>
         <div class="form-group col-6">
             <label for="exampleSelectGender">Gender:</label>
-            <select ng-model="form.typeGender" name="gender" class="form-control" id="exampleSelectGender">
-                <option value="true">
-                    Male
-                </option>
-                <option value="false">
-                    Female
-                </option>
+            <select ng-model="form.typeGender" name="typeGender" class="form-control" id="exampleSelectGender">
+                <option value="MALE" ng-selected="{{form.typeGender == 'Male'}}">Male</option>
+                <option value="FEMALE" ng-selected="{{form.typeGender == 'Female'}}">Female</option>
             </select>
         </div>
         <div class="form-group col-6">
             <label for="exampleSelectRole">Role:</label>
-            <select ng-model="form.typeRole" name="role" class="form-control" id="exampleSelectRole">
-                <option  value="0">
-                    Admin
-                </option>
-                <option  value="1">
-                    User
-                </option>
+            <select ng-model="form.typeRole" name="typeRole" class="form-control" id="exampleSelectRole">
+                <option value="ADMIN" ng-selected="{{form.typeRole == 'ADMIN'}}">Admin</option>
+                <option value="USER" ng-selected="{{form.typeRole == 'USER'}}">User</option>
             </select>
         </div>
         <div class="form-group col-12">
             <label>File upload:</label>
-            <div class="input-group mb-3">
+            <div class="input-group">
                 <div class="custom-file">
                     <input ng-model="form.image" name="image" type="file" class="custom-file-input"
-                        id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                        id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+                        onchange="angular.element(this).scope().imageChanged(this.files)">
                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                 </div>
             </div>

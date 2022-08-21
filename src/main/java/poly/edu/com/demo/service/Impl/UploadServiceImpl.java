@@ -7,24 +7,26 @@ import poly.edu.com.demo.service.UploadService;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.util.Base64;
 
 @Service
 public class UploadServiceImpl implements UploadService {
     @Autowired
     ServletContext servletContext;
     @Override
-    public File save(MultipartFile file, String folder) {
-        File dir = new File(servletContext.getRealPath("resources/assets/" + folder));
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
-        String s = System.currentTimeMillis() + file.getOriginalFilename();
-        String name = Integer.toHexString(s.hashCode()) + s.substring(s.lastIndexOf("."));
+    public String save(MultipartFile file) {
+//        File dir = new File(servletContext.getRealPath("resources/assets/" + folder));
+//        if(!dir.exists()){
+//            dir.mkdirs();
+//        }
+//        String s = System.currentTimeMillis() + file.getOriginalFilename();
+//        String name = Integer.toHexString(s.hashCode()) + s.substring(s.lastIndexOf("."));
         try {
-            File saveFile = new File(dir, name);
-            file.transferTo(saveFile);
-            System.out.println(saveFile.getAbsolutePath());
-            return saveFile;
+            String base64 = Base64.getEncoder().encodeToString(file.getBytes());
+//            File saveFile = new File(dir, base64);
+//            file.transferTo(saveFile);
+//            System.out.println(saveFile.getAbsolutePath());
+            return base64;
         }catch (Exception e){
             throw  new RuntimeException();
         }

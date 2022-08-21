@@ -20,13 +20,13 @@ public class UploadRestController {
     @Autowired
     UploadService uploadService;
 
-    @PostMapping("/rest/upload/{folder}")
-    public JsonNode upload(@PathVariable("file")MultipartFile file, @PathVariable("folder") String folder){
-        File saveFile = uploadService.save(file, folder);
+    @PostMapping("/rest/upload/{image}")
+    public JsonNode upload(@PathVariable("file")MultipartFile file){
+
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
-        node.put("name", saveFile.getName());
-        node.put("size", saveFile.length());
+        node.put("name", uploadService.save(file));
+//        node.put("size", saveFile.length());
         return node;
     }
 
