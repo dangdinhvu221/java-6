@@ -1,7 +1,6 @@
 package poly.edu.com.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import poly.edu.com.demo.entity.Users;
 import poly.edu.com.demo.service.UserService;
 
@@ -44,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/order/**", "/history", "/assets/**").authenticated()
+                .antMatchers("/order/**").authenticated()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN", "0")
                 .antMatchers("/rest/authorities").hasRole("USER")
                 .anyRequest().permitAll();

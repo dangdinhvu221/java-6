@@ -27,6 +27,13 @@ public class HomePageController {
         return "homePage/layouts/indexHomePage";
     }
 
+    @GetMapping("/earPhoneDetails/{id}")
+    private String earPhoneDetail(Model model, @PathVariable Long id
+    ) {
+        model.addAttribute("earPhone", this.earPhoneService.getEarPhone(id));
+        return "homePage/fragments/product-detail";
+    }
+
     @GetMapping("/logInForm")
     private String logIn(Model model) {
         return "LogIn/index";

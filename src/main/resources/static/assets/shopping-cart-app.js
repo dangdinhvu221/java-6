@@ -1,6 +1,7 @@
 const app = angular.module("shopping-cart-app", []);
 
-app.controller("cart-controller", function ($scope, $http) {
+app.controller("cart-controller", function ($scope, $http, $rootScope) {
+  $scope.quantity = 1;
   $scope.cart = {
     items: [],
     // Them san pham vao gio hang
@@ -9,13 +10,20 @@ app.controller("cart-controller", function ($scope, $http) {
       if (item) {
         item.qty++;
         this.saveLocalStorage();
+       
       } else {
         $http.get(`/rest/earPhones/${id}`).then((resp) => {
-          resp.data.qty = 1;
+          resp.data.qty = $scope.quantity;
           this.items.push(resp.data);
           this.saveLocalStorage();
         });
       }
+      Swal.fire({
+        icon: 'success',
+        title: 'Đã thêm vào giỏ hàng!',
+        showConfirmButton: false,
+        timer: 1500
+      })
       console.log(this.items);
     },
     // Xoa san pham trong gio hang
@@ -56,13 +64,13 @@ app.controller("cart-controller", function ($scope, $http) {
   };
 
   $scope.cart.loadFromLocalStorage();
+
   $scope.order = {
     created: new Date(),
     address1: "",
     address2: "",
     usersByUserId: { username: $("#username").val() },
     total: ($scope.cart.amount * 1.1).toFixed(2),
-
 
     get orderDetails() {
       return $scope.cart.items.map((i) => {
@@ -81,9 +89,14 @@ app.controller("cart-controller", function ($scope, $http) {
       $http
         .post(`/rest/orders/${id}/${quantitySell}`, order)
         .then((resp) => {
-          console.log($("#idOrder").text())
-          console.log($("#quantitySell").val())
-          alert("Order succsesfully!!");
+          console.log($("#idOrder").text());
+          console.log($("#quantitySell").val());
+          Swal.fire({
+            icon: 'success',
+            title: 'Đặt hàng thành công!',
+            showConfirmButton: false,
+            timer: 1500
+          })
 
           $http
             .delete(`/rest/orders/${id}/${quantitySell}`)
@@ -97,10 +110,13 @@ app.controller("cart-controller", function ($scope, $http) {
           location.href = "/order/detail/" + resp.data.id;
         })
         .catch((error) => {
-          alert("Order Error: " + error.message);
-          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error...",
+            text: error,
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
         });
-  console.log($scope.order);
     },
   };
 });

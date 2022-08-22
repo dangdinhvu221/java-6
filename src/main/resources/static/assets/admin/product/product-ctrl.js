@@ -8,7 +8,7 @@ app.controller("product-ctrl", function ($scope, $http) {
         $http.get("/rest/earPhones/admin").then(resp => {
             $scope.items = resp.data;
             $scope.items.forEach(item => {
-                item.createDate = new Date(item.createDate)
+                item.created = new Date(item.created)
             })
         })
 
@@ -22,7 +22,7 @@ app.controller("product-ctrl", function ($scope, $http) {
 
     $scope.reset = function () {
         $scope.form = {
-            createDate: new Date(),
+            created: new Date(),
             image: '',
             available: true
         }
@@ -38,27 +38,53 @@ app.controller("product-ctrl", function ($scope, $http) {
         var item = angular.copy($scope.form);
         $http.post(`/rest/earPhones`, item).then(
             resp => {
-                resp.data.createDate = new Date(resp.data.createDate)
+                resp.data.created = new Date()
                 $scope.items.push(resp.data);
                 $scope.reset();
-                alert("Them moi thanh cong");
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Thêm thành công !',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
             }
         ).catch(error => {
-            alert("Loi Them Moi San Pham")
-            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: error,
+                footer: '<a href="">Why do I have this issue?</a>',
+              });
         })
     }
     $scope.delete = function (item) {
         $http.delete(`/rest/earPhones/${item.id}`).then(
             resp => {
-                var index = $scope.items.findIndex(p => p.id === item.id);
-                $scope.items.splice(index, 1);
-                $scope.reset();
-                alert("Xoa thanh cong");
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      var index = $scope.items.findIndex((p) => p.id === item.id);
+                      $scope.items.splice(index, 1);
+                      Swal.fire("Deleted!", "Your file has been deleted.", "success");
+                    }
+                  });
+                  $scope.reset();
             }
         ).catch(error => {
-            alert("Loi Xoa San Pham")
-            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: error,
+                footer: '<a href="">Why do I have this issue?</a>',
+              });
         })
     }
     $scope.update = function () {
@@ -67,11 +93,20 @@ app.controller("product-ctrl", function ($scope, $http) {
             resp => {
                 var index = $scope.items.findIndex(p => p.id === item.id);
                 $scope.items[index] = item;
-                alert("Update thanh cong");
+                Swal.fire({
+                    icon: "success",
+                    title: "Cập nhật thành công !",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
             }
         ).catch(error => {
-            alert("Loi update San Pham")
-            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: error,
+                footer: '<a href="">Why do I have this issue?</a>',
+              });
         })
     }
 

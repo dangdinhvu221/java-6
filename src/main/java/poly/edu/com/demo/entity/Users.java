@@ -20,9 +20,9 @@ import java.util.List;
 @Entity
 @Table
 public class Users  implements Serializable {
-    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
+
+    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String username;
     private String password;
     private String fullName;
